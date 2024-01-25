@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+#this code is display the prompt 10 times using while loop
+counter=1
+while [ $counter -le 10 ]; do
+	echo "Best School"
+	((counter++))
+done
