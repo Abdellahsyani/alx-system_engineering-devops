@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+#the file fuzz buzz
+for n in {1..100}; do
+		flag=0
+	if [ $((n % 3)) -eq 0 ]; then
+		echo -n "Fizz"
+		flag=1
+	fi
+	if [ $((n % 5)) -eq 0 ]; then
+		echo -n "Buzz"
+		flag=1
+	fi
+	if [ $flag -eq 1 ]; then
+		echo ""
+	else
+		echo "$n"
+	fi
+done
