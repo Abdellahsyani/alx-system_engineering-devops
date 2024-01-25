@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+#list all files name
+files=$(find . -maxdepth 1 -not -name ".*" | cut -d "/" -f 2 | cut -d "-" -f 2)
+for file in $files; do
+	echo "$file"
+done
