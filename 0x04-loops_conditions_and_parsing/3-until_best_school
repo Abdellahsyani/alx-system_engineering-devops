@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+#this code os run the prompt 10 times with until loop
+count=1
+until [ $count -gt 10 ]; do
+	echo "Best School"
+	((count++))
+done
