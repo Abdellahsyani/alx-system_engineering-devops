@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
 #this code is display Bet School 10 times
-for best in $(seq 1 10); do
+for _ in $(seq 1 10); do
 	echo "Best School"
 done
