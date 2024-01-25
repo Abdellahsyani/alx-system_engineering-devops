@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+#display number from 1 to 20 with same different messages
+count=1
+while [ $count -le 20 ]; do
+	case $count in
+		5)
+			echo "bad luck from China"
+			;;
+		10)
+			echo "bad luck from Japan"
+			;;
+		18)
+			echo "bad luck from Italy"
+			;;
+	esac
+	echo "$count"
+	((count++))
+done
