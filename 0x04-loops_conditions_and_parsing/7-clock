@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+#this code print hour and munite hour end at 12
+hour=0
+while [ $hour -le 12 ]; do
+	echo "Hour: $hour"
+	minute=1  # Reset minute to 1 at the start of each hour
+	while [ $minute -le 59 ]; do
+		echo "$minute"
+		((minute++))
+	done
+	((hour++))
+done
