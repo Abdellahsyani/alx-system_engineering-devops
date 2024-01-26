@@ -1,3 +1,0 @@
-#!/usr/bin/env bash
-#stop to infinity spam
-pkill -f -SIGTERM 7-highlander
