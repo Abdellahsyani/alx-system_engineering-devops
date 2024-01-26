@@ -1,4 +1,3 @@
 #!/usr/bin/env bash
 #display a list of currently running process
-FORMAT="pid,ppid,user,%cpu,%mem,stat,cmd"
-ps -e -o $FORMAT --forest
+ps uf -e
