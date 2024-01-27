@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+#stop to infinity spam
+pkill -f -SIGKILL 7-highlander

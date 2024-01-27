@@ -1,3 +1,8 @@
 #!/usr/bin/env bash
+<<<<<<< HEAD
 #kill the process using pkill
 pkill -SIGKILL "$(-f 4-to_infinity_and_beyond)"
+=======
+#Kills the 4-to_infinity_and_beyond process
+pkill -f -SIGTERM 4-to_infinity_and_beyond 
+>>>>>>> ab21d757cf9f78a081eaf9b58f99936913500ccd
