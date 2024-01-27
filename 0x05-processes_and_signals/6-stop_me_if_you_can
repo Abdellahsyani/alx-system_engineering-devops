@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+#kill the process using pkill
+pkill -SIGKILL "$(-f 4-to_infinity_and_beyond)"
