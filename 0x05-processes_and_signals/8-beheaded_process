@@ -1,3 +1,4 @@
 #!/usr/bin/env bash
 #stop to infinity spam
-pkill -f -SIGKILL 7-highlander
+proc=$(pgrep -a "bash" | grep "7-highlander" | cut -d " " -f1)
+kill -s SIGKILL "$proc"
