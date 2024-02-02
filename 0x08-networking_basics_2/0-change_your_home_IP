@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+#write a host file with two IP addresses
+echo -e "127.0.0.2\tlocalhost\n8.8.8.8\t\tfacebook.com" > ./hosts
+grep -v 'localhost\|facebook.com' /etc/hosts >> ./hosts
+cp -f ./hosts /etc/hosts
