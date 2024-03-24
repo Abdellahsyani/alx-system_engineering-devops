@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+# generates key paire named school with number of bits 4096 and passphrase
+
+ssh-keygen -t rsa -b 4096 -C "this is a new key paire" -f ~/.ssh/school -N "betty"
