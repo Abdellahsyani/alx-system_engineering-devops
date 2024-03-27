@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# setup nginx web server on an ubuntu machine
+# setup Nginx web server on an ubuntu machine
 apt-get update && apt-get upgrade -y;
 apt-get install nginx -y;
 ufw allow 'Nginx HTTP';
