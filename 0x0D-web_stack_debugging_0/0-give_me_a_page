@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# start web server
+service apache2 start
+service apache2 status
