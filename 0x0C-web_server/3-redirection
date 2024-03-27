@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+# setup nginx web server on an ubuntu machine
+apt-get install nginx -y;
+ufw allow 'Nginx HTTP';
+service nginx restart;
+
+file_path='/etc/nginx/sites-available/default'
+search_for='server_name _;'
+replace_with='server_name _;\n\n\tlocation \/redirect_me {\n\t\treturn 301 https:\/\/www.youtube.com\/watch?v=QH2-TGUlwu4;\n\t}'
+
+sed -i "s/$search_for/$replace_with/" "$file_path";
+nginx -s reload;
