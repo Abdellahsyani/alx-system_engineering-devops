@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+# this is install nginx
+
+apt-get update && apt-get upgrade -y;
+apt-get install nginx -y;
+ufw allow 'nginx HTTP';
+service nginx restart;
+file_path='/etc/nginx/sites-available/default'
+text_before='\tserver_name _;'
+text_after='\tserver_name _;\n\n\tadd_header X-Served-By "${HOSTNAME}";\n'
+sed -i "s/$text_before/$text_after/" "$file_path"
+nginx -s reload
