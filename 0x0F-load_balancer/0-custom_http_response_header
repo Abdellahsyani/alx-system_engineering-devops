@@ -1,10 +1,9 @@
 #!/usr/bin/env bash
-# this is install nginx
-# skiip
-
-apt-get update && apt-get upgrade -y;
+# configure nginx to add a custom header to each response
+# shellcheck disable=SC2154
+apt-get update
 apt-get install nginx -y;
-ufw allow 'nginx HTTP';
+ufw allow 'Nginx HTTP';
 service nginx restart;
 file_path='/etc/nginx/sites-available/default'
 text_before='\tserver_name _;'
