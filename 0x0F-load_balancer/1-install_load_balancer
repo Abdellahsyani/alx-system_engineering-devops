@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+#install and set HAProxy on server
+
+apt-get update
+apt-get install haproxy -y;
+sudo systemctl enable haproxy -y;
+sudo systemctl start haproxy;
+
+
+
+frontend www
+  bind *:80
+  file_path path -i /etc/haproxy/haproxy.cfg
+  use_backend static_assets if path
+
+backend static_assets
+  balance roundrobin
+  server web-01 [STUDENT_ID]-web-01:80 check
+  server web-02 [STUDENT_ID]-web-02:80 check
+
+systemctl restart haproxy
+
+systemctl status haproxy
