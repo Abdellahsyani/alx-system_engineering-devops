@@ -7,18 +7,19 @@ apt-get -y install haproxy
 
 server_config=\
 "
-frontend static_assets
-  bind :80
-  use_backend static_assets
+frontend abdos_back
+  bind *:80
+  default_backend abdos_back
 
-backend static_assets
+backend abdos_back
   balance roundrobin
-  server web-01 18.207.112.142:80
-  server web-02 100.25.110.244:80
+  server web-01 18.207.112.142:80 check
+  server web-02 100.25.110.244:80 check
 "
 echo "$server_config" | sudo tee -a /etc/haproxy/haproxy.cfg
 
 echo "ENABLED=1" | sudo tee -a /etc/default/haproxy
+
 sudo haproxy -c -f /etc/haproxy/haproxy.cfg
 
 sudo service haproxy start
