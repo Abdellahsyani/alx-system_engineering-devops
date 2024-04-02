@@ -1,25 +1,59 @@
 #!/usr/bin/env bash
-#install and set HAProxy on server
+# install load balancer
 
 
-sudo apt-get -y update
-apt-get -y install haproxy
+echo -e "Updating and doing some minor checks...\n"
+
+function install() {
+	command -v "$1" &> /dev/null
+
+	#shellcheck disable=SC2181
+	if [ $? -ne 0 ]; then
+		echo -e "	Installing: $1\n"
+		sudo apt-get update -y -qq && \
+			sudo apt-get install -y "$1" -qq
+		echo -e "\n"
+	else
+		echo -e "	${1} is already installed.\n"
+	fi
+}
+
+install haproxy #install haproxy
+
+echo -e "\nSetting up some minor stuff.\n"
+
+# backup default server config file
+sudo cp /etc/haproxy/haproxy.cfg haproxy_default.backup
 
 server_config=\
 "
-frontend abdos_front
-	bind *:80
-  	mode http
-  	default_backend abdos_back
-backend abdos_back
-  	balance roundrobin
-  	server 440397-web-01 18.207.112.142:80 check
-  	server 440397-web-02 100.25.110.244:80 check
+defaults
+  mode http
+  timeout client 15s
+  timeout connect 10s
+  timeout server 15s
+  timeout http-request 10s
+
+frontend globalprogressions.tech_frontend
+    bind *:80
+    default_backend globalprogressions.tech_backend
+
+backend globalprogressions.tech_backend
+    balance roundrobin
+    server 356893-web-01 100.25.17.119:80 check
+    server 356893-web-02 54.88.101.99:80 check
 "
-echo "$server_config" | sudo tee -a /etc/haproxy/haproxy.cfg
 
-echo "ENABLED=1" | sudo tee -a /etc/default/haproxy
+# shellcheck disable=SC2154
+echo "$server_config" | sudo dd status=none of=/etc/haproxy/haproxy.cfg
 
-sudo haproxy -c -f /etc/haproxy/haproxy.cfg
+# enable haproxy to be started by init script
+echo "ENABLED=1" | sudo dd status=none of=/etc/default/haproxy
 
-sudo service haproxy start
+echo "configured - Roundrobin On web-01 & web-02"
+
+if [ "$(pgrep -c haproxy)" -le 0 ]; then
+	sudo service haproxy start
+else
+	sudo service haproxy restart
+fi

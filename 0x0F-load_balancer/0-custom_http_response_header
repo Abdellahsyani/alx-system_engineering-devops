@@ -1,57 +1,37 @@
 #!/usr/bin/env bash
-#install load balancer
-echo -e "Updating and doing some minor checks...\n"
+# Installs Nginx with the following configurations:
+#+    Listens on port 80.
+#+    Returns a page containing "Hello World!" when queried
+#+     at the root with a curl GET request.
+#+    Configures /redirect_me as a "301 Moved Permanently".
+#+    Includes a custom 404 page containing "Ceci n'est pas une page".
+#+    Contains a custom HTTP header named X-Served-By.
+#+    The value of the HTTP header is the hostname of the running server.
 
-function install() {
-    command -v "$1" &> /dev/null
+apt-get install -y nginx
 
-    #shellcheck disable=SC2181
-    if [ $? -ne 0 ]; then
-        echo -e "    Installing: $1\n"
-        sudo apt-get update -y -qq && \
-            sudo apt-get install -y "$1" -qq
-        echo -e "\n"
-    else
-        echo -e "    ${1} is already installed.\n"
-    fi
-}
+mkdir -p /var/www/html
+touch /var/www/html/index.html
+echo "Hello World!" > /var/www/html/index.html
+touch /var/www/html/404.html
+echo "Ceci n'est pas une page" > /var/www/html/404.html
 
-install haproxy #install haproxy
+echo "server {
+    listen 80 default_server;
+    listen [::]:80 default_server;
+    add_header X-Served-By $HOSTNAME;
+    root   /var/www/html;
+    index  index.html index.htm;
 
-echo -e "\nSetting up some minor stuff.\n"
+    location /redirect_me {
+        return 301 https//YouTube.com/;
+    }
 
-#backup default server config file
-sudo cp /etc/haproxy/haproxy.cfg haproxy_default.backup
+    error_page 404 /404.html;
+    location /404 {
+      root /var/www/html;
+      internal;
+    }
+}" > /etc/nginx/sites-available/default
 
-server_config=\
-"
-defaults
-  mode http
-  timeout client 15s
-  timeout connect 10s
-  timeout server 15s
-  timeout http-request 10s
-
-frontend globalprogressions.tech_frontend
-    bind *:80
-    default_backend globalprogressions.tech_backend
-
-backend globalprogressions.tech_backend
-    balance roundrobin
-    server 523856-web-01 100.25.38.187:80 check
-    server 523856-web-02 18.207.141.29:80 check
-"
-
-#shellcheck disable=SC2154
-echo "$server_config" | sudo dd status=none of=/etc/haproxy/haproxy.cfg
-
-#enable haproxy to be started by init script
-echo "ENABLED=1" | sudo dd status=none of=/etc/default/haproxy
-
-echo "configured - Roundrobin On web-01 & web-02"
-
-if [ "$(pgrep -c haproxy)" -le 0 ]; then
-    sudo service haproxy start
-else
-    sudo service haproxy restart
-fi
+service nginx restart
