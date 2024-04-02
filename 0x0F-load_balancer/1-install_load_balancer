@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
 #install and set HAProxy on server
 
-apt-get update
-apt-get upgrade -y
-apt-get install haproxy -y
 
-echo "ENABLED=1" >> /etc/default/haproxy
-echo e"
+sudo apt-get -y update
+apt-get -y install haproxy
+
+server_config=\
+"
 frontend static_assets
   bind :80
   use_backend static_assets
@@ -14,6 +14,11 @@ frontend static_assets
 backend static_assets
   balance roundrobin
   server web-01 18.207.112.142:80
-  server web-02 100.25.110.244:80" >> /etc/haproxy/haproxy.cfg
+  server web-02 100.25.110.244:80
+"
+echo "$server_config" | sudo tee -a /etc/haproxy/haproxy.cfg
 
-service haproxy start
+echo "ENABLED=1" | sudo tee -a /etc/default/haproxy
+sudo haproxy -c -f /etc/haproxy/haproxy.cfg
+
+sudo service haproxy start
