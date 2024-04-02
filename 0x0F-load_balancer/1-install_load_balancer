@@ -7,14 +7,14 @@ apt-get -y install haproxy
 
 server_config=\
 "
-frontend abdos_back
-  bind *:80
-  default_backend abdos_back
-
+frontend abdos_front
+	bind *:80
+  	mode http
+  	default_backend abdos_back
 backend abdos_back
-  balance roundrobin
-  server web-01 18.207.112.142:80 check
-  server web-02 100.25.110.244:80 check
+  	balance roundrobin
+  	server 440397-web-01 18.207.112.142:80 check
+  	server 440397-web-02 100.25.110.244:80 check
 "
 echo "$server_config" | sudo tee -a /etc/haproxy/haproxy.cfg
 
