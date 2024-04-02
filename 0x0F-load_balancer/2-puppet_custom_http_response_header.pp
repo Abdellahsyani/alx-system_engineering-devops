@@ -1,4 +1,5 @@
 # setup loadbalancer with HAProxy
+
 include stdlib
 
 package { 'nginx':
