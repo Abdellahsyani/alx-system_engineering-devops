@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+# get informations about domain names
+# shellcheck disable=SC2086
+if [ "$2" ]; then
+	domains=("$2")
+else
+	domains=(www lb-01 web-01 web-02)
+fi
+
+function halfline ()
+{
+	echo -n "The subdomain $1 is a "
+}
+
+for sub in "${domains[@]}"
+do
+	halfline $sub
+	dig $sub.$1 | grep ANSWER -A 1 | awk '/IN/ {print $4 " record and points to " $5 }'
+done
