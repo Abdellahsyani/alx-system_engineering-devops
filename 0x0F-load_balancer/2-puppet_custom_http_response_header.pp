@@ -1,27 +1,30 @@
-# setup loadbalancer with HAProxy
+# Setup New Ubuntu server with nginx
+# and add a custom HTTP header
 
-include stdlib
+exec { 'update system':
+        command => '/usr/bin/apt-get update',
+}
 
 package { 'nginx':
-  ensure   => installed,
-  name     => 'nginx',
-  provider => 'apt'
+	ensure => 'installed',
+	require => Exec['update system']
 }
-exec { 'firewall':
-  path    => ['/usr/sbin', '/usr/bin', '/bin'],
-  command => "ufw allow 'Nginx HTTP'"
+
+file {'/var/www/html/index.html':
+	content => 'Hello World!'
 }
-service { 'nginx':
-  ensure  => running,
-  name    => 'nginx',
-  restart => ''
+
+exec {'redirect_me':
+	command => 'sed -i "24i\	rewrite ^/redirect_me https://th3-gr00t.tk/ permanent;" /etc/nginx/sites-available/default',
+	provider => 'shell'
 }
-file_line {'custom_header':
-  ensure => 'present',
-  path   => 'etc/nginx/sites-available/default',
-  line   => '	add_header X-Served-By ${HOSTNAME};'
+
+exec {'HTTP header':
+	command => 'sed -i "25i\	add_header X-Served-By \$hostname;" /etc/nginx/sites-available/default',
+	provider => 'shell'
 }
-exec { 'reload nginx':
-  path    => ['/usr/sbin', '/usr/bin', '/bin'],
-  command => 'nginx -s reload'
+
+service {'nginx':
+	ensure => running,
+	require => Package['nginx']
 }
