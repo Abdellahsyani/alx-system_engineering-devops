@@ -34,14 +34,14 @@ defaults
   timeout server 15s
   timeout http-request 10s
 
-frontend globalprogressions.tech_frontend
+frontend myabdo.tech_frontend
     bind *:80
-    default_backend globalprogressions.tech_backend
+    default_backend myabdo.tech_backend
 
-backend globalprogressions.tech_backend
+backend myabdo.tech_backend
     balance roundrobin
-    server 356893-web-01 100.25.17.119:80 check
-    server 356893-web-02 54.88.101.99:80 check
+    server 440397-web-01 54.87.157.134:80 check
+    server 440397-web-02 100.25.110.244:80 check
 "
 
 # shellcheck disable=SC2154
