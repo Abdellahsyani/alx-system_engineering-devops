@@ -41,7 +41,7 @@ frontend myabdo-frontend
         default_backend myabdo-backend
 
 frontend myabdo-frontend-https
-        bind *:443 ssl crt /etc/haproxy/certs/myabdo.tech.pem
+        bind *:443 ssl crt /etc/haproxy/certs/www.myabdo.tech.pem
         http-request set-header X-Forwarded-Proto https
         default_backend myabdo-backend
 
