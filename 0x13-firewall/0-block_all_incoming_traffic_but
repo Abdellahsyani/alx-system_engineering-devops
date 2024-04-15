@@ -1,0 +1,21 @@
+echo -e "update the packages.....\n"
+
+sudo apt-get update
+
+echo -e "installing the ufw.....\n"
+
+sudo apt-get install -y ufw
+
+# allow and setup some rule
+
+sudo ufw allow 22
+sudo ufw allow 80
+sudo ufw allow 443
+
+# configure some other rules
+
+sudo ufw default deny incoming
+sudo ufw default allow outgoing
+
+# Enable firewall
+sudo ufw enable
