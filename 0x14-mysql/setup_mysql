@@ -1,6 +1,3 @@
-#!/usr/bin/env bash
-
-echo -e "add the signature key"
 sudo apt-key add signature.key
 
 sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys B7B3B788A8D3785C
