@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+# run nginx as a non priviliged user on port 8080
+sed -i 's/80 def/8080 def/' /etc/nginx/sites-available/default
+pkill apache2
+chmod 644 /etc/nginx/nginx.conf
+su - nginx -c 'service nginx start'
