@@ -10,11 +10,12 @@ if __name__ == "__main__":
     url_todo = requests.get("https://jsonplaceholder.typicode.com"
                             "/todos?userId=" + sys.argv[1])
 
+
     user = url_user.json()
     todo = url_todo.json()
 
     EMPLOYEE_NAME = user[0].get('name')
-    NUMBER_OF_DONE_TASKS = sum(1 for i in todo if i['completed'])
+    NUMBER_OF_DONE_TASKS = sum(1 for i in todo if i.get('completed'))
     TOTAL_NUMBER_OF_TASKS = len(todo)
 
     print("Employee {} is done with tasks({}/{}):"
