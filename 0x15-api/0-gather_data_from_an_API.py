@@ -1,16 +1,16 @@
 #!/usr/bin/python3
-"""get data from APIs """
+"""import data from API
+"""
 import requests
 import sys
 
-if __name__ == '__main__':
-    if len(sys.argv) > 1:
-        user = requests.get('https://jsonplaceholder.typicode.com/users/' + sys.argv[1])
-        user = user.json()
-        tasks = requests.get('https://jsonplaceholder.typicode.com/todos?userId=' + sys.argv[1])
-        tasks = tasks.json()
-        uncompleted = [t.get('title') for t in tasks if t.get('completed')]
-        print('Employee {} is done with tasks({}/{}):'
-              .format(user.get('name'), len(uncompleted), len(tasks)))
-        for task in uncompleted:
-            print('\t ' + str(task))
+
+if __name__ == "__main__":
+    url = 'https://jsonplaceholder.typicode.com/'
+    user = requests.get(url + "users/{}".format(sys.argv[1])).json()
+    todos = requests.get(url + "todos", params={"userId": sys.argv[1]}).json()
+
+    completed = [t.get("title") for t in todos if t.get("completed") is True]
+    print("Employee {} is done with tasks({}/{}):".format(
+        user.get("name"), len(completed), len(todos)))
+    [print("\t {}".format(c)) for c in completed]
