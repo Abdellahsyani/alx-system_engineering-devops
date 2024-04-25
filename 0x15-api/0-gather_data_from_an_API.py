@@ -2,7 +2,6 @@
 """import data from API
 """
 import requests
-from requests import get
 import sys
 
 if __name__ == "__main__":
@@ -18,7 +17,7 @@ if __name__ == "__main__":
     NUMBER_OF_DONE_TASKS = sum(1 for i in todo if i['completed'])
     TOTAL_NUMBER_OF_TASKS = len(todo)
 
-    print("Employee {} is done with tasks({}/{})"
+    print("Employee {} is done with tasks({}/{}):"
           .format(EMPLOYEE_NAME, NUMBER_OF_DONE_TASKS,
                   TOTAL_NUMBER_OF_TASKS))
     for i in todo:
