@@ -6,8 +6,10 @@ from requests import get
 import sys
 
 if __name__ == "__main__":
-    url_user = requests.get("https://jsonplaceholder.typicode.com/users?id=" + sys.argv[1])
-    url_todo = requests.get("https://jsonplaceholder.typicode.com/todos?userId=" + sys.argv[1])
+    url_user = requests.get("https://jsonplaceholder.typicode.com/users?id="
+                            + sys.argv[1])
+    url_todo = requests.get("https://jsonplaceholder.typicode.com"
+                            "/todos?userId=" + sys.argv[1])
 
     user = url_user.json()
     todo = url_todo.json()
@@ -17,7 +19,8 @@ if __name__ == "__main__":
     TOTAL_NUMBER_OF_TASKS = len(todo)
 
     print("Employee {} is done with tasks({}/{})"
-            .format(EMPLOYEE_NAME, NUMBER_OF_DONE_TASKS, TOTAL_NUMBER_OF_TASKS))
+          .format(EMPLOYEE_NAME, NUMBER_OF_DONE_TASKS,
+                  TOTAL_NUMBER_OF_TASKS))
     for i in todo:
         if i.get('completed'):
             print("\t {}".format(i.get('title')))
