@@ -1,32 +1,23 @@
 #!/usr/bin/python3
 """import data from API
 """
-
-from json import loads
+import requests
 from requests import get
-from sys import argv
+import sys
+
 if __name__ == "__main__":
+    url_user = requests.get("https://jsonplaceholder.typicode.com/users?id=" + sys.argv[1])
+    url_todo = requests.get("https://jsonplaceholder.typicode.com/todos?userId=" + sys.argv[1])
 
-    employee_id = argv[1]
-    todo_url = "https://jsonplaceholder.typicode.com/users/{}/todos/"\
-        .format(employee_id)
-    user_url = "https://jsonplaceholder.typicode.com/users/{}"\
-        .format(employee_id)
+    user = url_user.json()
+    todo = url_todo.json()
 
-    response_todo = get(todo_url)
-    response_user = get(user_url)
+    EMPLOYEE_NAME = user[0].get('name')
+    NUMBER_OF_DONE_TASKS = sum(1 for i in todo if i['completed'])
+    TOTAL_NUMBER_OF_TASKS = len(todo)
 
-    list_emp = response_todo.json()
-    EMPLOYEE_NAME = response_user.json().get('name')
-    NUMBER_OF_DONE_TASKS = 0
-    TOTAL_NUMBER_OF_TASKS = len(list_emp)
-    for i in list_emp:
-        if i.get('completed'):
-            NUMBER_OF_DONE_TASKS += 1
-
-    print(f"Employee {EMPLOYEE_NAME} is done with tasks", end="")
-    print(f"({NUMBER_OF_DONE_TASKS}/{TOTAL_NUMBER_OF_TASKS}):")
-
-    for i in list_emp:
+    print("Employee {} is done with tasks({}/{})"
+            .format(EMPLOYEE_NAME, NUMBER_OF_DONE_TASKS, TOTAL_NUMBER_OF_TASKS))
+    for i in todo:
         if i.get('completed'):
             print("\t {}".format(i.get('title')))
