@@ -7,10 +7,8 @@ def number_of_subscribers(subreddit):
     """Retrieve the number of subscribers for a given subreddit."""
     url = f"https://www.reddit.com/r/{subreddit}/about.json"
 
-    # Set custom User-Agent header to avoid being blocked
-    headers = {"User-Agent": "My Reddit API Client"}
     # Make the API request
-    response = requests.get(url, headers=headers, allow_redirects=False)
+    response = requests.get(url)
 
     # Check if the response status code indicates success (200 OK)
     if response.status_code == 200:
