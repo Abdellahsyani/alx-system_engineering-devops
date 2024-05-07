@@ -8,7 +8,7 @@ def top_ten(subreddit):
     url = "https://www.reddit.com/r/{sub}/hot.json".format(sub=subreddit)
     params = {"limit": 10}
     headers = {
-        "User-Agent": "yahia:intranet.alxswe.com:v2.4.1 (by /u/keroxyz)",
+        "User-Agent": "abdo:intranet.alxswe.com:v2.4.1 (by /u/keroxyz)",
     }
     res = requests.get(url=url, headers=headers, params=params)
     if res.status_code != 200:
