@@ -5,11 +5,12 @@ import requests
 
 def number_of_subscribers(subreddit):
     """Retrieve the number of subscribers for a given subreddit."""
-    url = f"https://www.reddit.com/r/{subreddit}/about.json"
-
+    url = "https://www.reddit.com/r/{sub}/about.json"
+    
+    headers = {"User-Agent": "My Reddit API Client"}
     # Make the API request
-    response = requests.get(url)
-
+    response = requests.get(url=url.format(sub=subreddit), headers=headers)
+    
     # Check if the response status code indicates success (200 OK)
     if response.status_code == 200:
         # Parse the JSON response
