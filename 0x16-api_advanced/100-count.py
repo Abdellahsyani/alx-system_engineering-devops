@@ -17,4 +17,3 @@ def get_posts(subreddit, after=""):
     if not data:
         return None, None
     return data, res.json()["data"].get("after")
-
