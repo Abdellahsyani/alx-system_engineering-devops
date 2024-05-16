@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+# reload gunicorn servers gracefully, whith 0 downtime
+pkill -HUP gunicorn
