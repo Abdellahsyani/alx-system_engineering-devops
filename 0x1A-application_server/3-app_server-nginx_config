@@ -16,7 +16,7 @@ location /hbnb_static { alias /data/web_static/current/;}
                         proxy_pass http://0.0.0.0:5001/number_odd_or_even/$1;
                 }
                 if ($request_filename ~ redirect_me){
-                        rewrite ^ https://th3-gr00t.tk/ permanent;
+                        rewrite ^ https://www.youtube.com/ permanent;
                 }
                 error_page 404 /error_404.html;
                 location = /error_404.html {
