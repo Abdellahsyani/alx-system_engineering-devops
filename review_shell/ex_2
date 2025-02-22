@@ -1,0 +1,5 @@
+#!/bin/bash
+
+cd .
+cd /tmp
+ls -la | grep "iamafile" | awk -F 'r' '{if ($1 == "-") {print "file"} if ($1 == "d") {print "derictory"}}' 
